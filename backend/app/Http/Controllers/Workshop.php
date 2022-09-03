@@ -54,7 +54,7 @@ class Workshop extends Controller
               return response('Falha ao enviar email: '. $e->getMessage(), 500);
             }
 
-            return response('Salvo com sucesso', 201);
+            return response('Salvo com sucesso', 200);
         } else
            return response('Falha ao cadastrar', 500);
     }

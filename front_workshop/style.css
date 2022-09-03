@@ -1,0 +1,85 @@
+body {
+    background-color: black !important;
+    color: white !important;
+}
+
+.inicial {
+    width: 160px;
+    right: auto;
+    height: 144px;
+    display: block;
+    margin: 50px auto;
+
+}
+
+.borda {
+    background: #5e59515c;
+    padding: 20px;
+    border-radius: 50px;
+}
+
+h1 {
+    color: rgb(255 131 0);
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h2 {
+    color: white;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 30px auto !important;
+}
+
+label {
+    font-weight: bold;
+}
+
+button {
+    color: white !important;
+    background-color: rgb(255 131 0) !important;
+    border-color: rgb(255 131 0) !important;
+    text-align: center;
+    margin: 30px auto !important;
+    font-weight: bold;
+}
+
+.final img {
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    display: block;
+    margin: 30px auto;
+
+
+}
+
+h3 {
+    font-size: 15px !important;
+    text-align: center;
+    color: rgb(255, 126, 51);
+    margin-bottom: 20px;
+
+}
+
+footer {
+    margin: 30px auto;
+}
+
+footer img {
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+
+}
+
+#part2 {
+    color: rgb(255, 126, 51);
+    width: 100%;
+    background-color: rgb(39, 38, 38);
+    position: relative;
+    margin-top: 15px;
+    font-size: 0.7rem;
+    text-align: center;
+    text-align: center;
+}
