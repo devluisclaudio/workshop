@@ -21,6 +21,12 @@
     <div class="container">
         <h2>Realize a sua inscrição</h2>
         <div class="borda">
+            <div id="overlay">
+                <div class="cv-spinner">
+                    <p><strong>Aguarde! Processando dados...</strong></p>
+                    <span class="spinner"></span>
+                </div>
+            </div>
             <form id="form">
                 <div class="container-fluid">
                     <div class="column">
@@ -152,12 +158,16 @@
             type: "POST",
             url: "https://backend.chamachurch.com/api/cadastrar-workshop",
             data: data,
+            beforeSend: function (){
+                $("#overlay").show();
+            },
             success: function () {
                 alert("Cadastrado com sucesso");
                 location.reload(true);
             },
             error: function () {
                 alert("Erro ao enviar inscrição");
+                $("#overlay").hide();
             }
         });
     })
