@@ -129,6 +129,24 @@
     <div id="part2">
         <label id="txt6"><i class="material-icons tiny"> copyright</i> 2021 ChamaTech - All right reserved</label>
     </div>
+
+    <button type="button" id="modalbutton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">>
+        Launch demo modal
+      </button>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content" style="background:rgb(39, 39, 39);">
+            <div class="modal-body">
+              Inscrição Realizada com sucesso!
+            </div>
+            <div class="modal-footer">
+              <button type="button" onclick="location.reload(true);" class="btn btn-warning">Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
 </body>
 
 </html>
@@ -162,8 +180,7 @@
                 $("#overlay").show();
             },
             success: function () {
-                alert("Cadastrado com sucesso");
-                location.reload(true);
+               $('#modalbutton').click();
             },
             error: function () {
                 alert("Erro ao enviar inscrição");

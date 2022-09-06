@@ -3,9 +3,9 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\SerializesModels; 
+
 
 class SendMailWorkshop extends Mailable
 {
@@ -29,8 +29,9 @@ class SendMailWorkshop extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.cadastrado')->with([
-            'user' => $this->user,
+        return $this->subject('Inscrição Workshop')
+        ->view('emails.cadastrado')->with([
+            'user' => $this->user
         ]);
     }
 }
