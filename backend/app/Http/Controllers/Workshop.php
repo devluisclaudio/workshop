@@ -22,9 +22,17 @@ class Workshop extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $data = $request->all();
+        $length = $request->input('length');
+        $lista = $this->repository->busca($data, $length);
+
+        if ($lista) {
+            return response()->json(['status' => true, 'data' => $lista], 200);
+        }
+
+        return response()->json(['status' => false, 'message' => "Nenhum Registro encontrado"]);
     }
 
     /**
@@ -46,17 +54,17 @@ class Workshop extends Controller
     public function store(WorkshopRequest $request)
     {
         $data = $request->all();
-        $user = $this->repository->save($data); 
+        $user = $this->repository->save($data);
         if ($user) {
             try {
                 Mail::to($user->email)->send(new SendMailWorkshop($user));
             } catch (Exception $e) {
-              return response('Falha ao enviar email: '. $e->getMessage(), 500);
+                return response('Falha ao enviar email: ' . $e->getMessage(), 500);
             }
 
             return response('Salvo com sucesso', 200);
         } else
-           return response('Falha ao cadastrar', 500);
+            return response('Falha ao cadastrar', 500);
     }
 
     /**
@@ -101,6 +109,23 @@ class Workshop extends Controller
      */
     public function destroy($id)
     {
-        //
+        if ($this->repository->delete($id))
+            return response()->json(['status' => true, 'message' => "Deletado com sucesso!"]);
+
+        return response()->json(['status' => false, 'message' => "Falha ao deletar!"]);
+    }
+
+
+    public function grupos()
+    {
+        $data = $this->repository->grupos();
+        return response()->json(['status' => true, 'data' => $data]);
+    }
+
+
+    public function estadosCivis()
+    {
+        $data = $this->repository->estadosCivis();
+        return response()->json(['status' => true, 'data' => $data]);
     }
 }

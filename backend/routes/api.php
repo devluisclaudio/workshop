@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Relatorios;
 use App\Http\Controllers\Workshop;
 
 use Illuminate\Support\Facades\Route;
@@ -15,6 +17,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/register', [AuthController::class, 'register']);
+Route::get('/auth/logout', [AuthController::class, 'logout']);
+Route::get('/auth/refresh', [AuthController::class, 'refresh']);
 
+Route::middleware(['auth:api'])->group( function () {
+    //Inscritos
+    Route::get('workshops', [Workshop::class, 'index']);
+    Route::delete('workshops/{id}', [Workshop::class, 'destroy']);
 
-Route::resource('cadastrar-workshop', Workshop::class);
+    //Constantes Grupos
+    Route::get('grupos', [Workshop::class, 'grupos']);
+    Route::get('estados-civis', [Workshop::class, 'estadosCivis']);
+
+    //Relatorios
+    Route::get('relatorios', [Relatorios::class, 'index']);
+});
+Route::post('cadastrar-workshop', [Workshop::class, 'store']);

@@ -35,22 +35,27 @@ class WorkshopRepository extends BaseRepository
      */
     public function busca($search = '', $limit = false)
     {
-        $query = $this->model->select(['workshops.*'])->with('user', 'categoria');
+        $query = $this->model->select(['workshops.*']);
 
         if (isset($search['filter'])) {
-            $query = $query->where('workshops.nome', 'ilike', '%' . $search['filter'] . '%');
+            $query = $query->where('workshops.nome', 'like', '%' . $search['filter'] . '%')
+                ->orWhere('workshops.email', 'like', '%' . $search['filter'] . '%');
         }
 
-        if (isset($search['status'])) {
-            $query = $query->where('workshops.status',  $search['status']);
+        if (isset($search['sexo'])) {
+            $query = $query->where('workshops.sexo',  $search['sexo']);
         }
 
-        if (isset($search['estrutura'])) {
-            $query = $query->where('workshops.estrutura',  $search['estrutura']);
+        if (isset($search['grupo_id'])) {
+            $query = $query->where('workshops.grupo_id',  $search['grupo_id']);
         }
-            
 
-        $query = $query->orderBy('servicos.created_at', 'desc');
+        if (isset($search['estado_civil_id'])) {
+            $query = $query->where('workshops.estado_civil_id',  $search['estado_civil_id']);
+        }
+
+
+        $query = $query->orderBy('workshops.created_at', 'desc');
 
         if ($limit !== false) {
             return $query->paginate($limit);
@@ -59,27 +64,6 @@ class WorkshopRepository extends BaseRepository
         }
     }
 
-    /**
-     * Lista
-     *
-     * @param string $search
-     * @param integer $limit
-     * @return array
-     */
-    public function lista()
-    {
-        $registros = $this->model->select(['servicos.id', 'servicos.nome', 'servicos.descricao'])->get()->toArray();
-
-        foreach ($registros as $registro) {
-            $dado[] = [
-                'id'        => $registro['id'],
-                'texto'     => $registro['nome'],
-                'descricao' => $registro['descricao']
-            ];
-        }
-
-        return $dado;
-    }
 
     public function save(array $data)
     {
@@ -163,47 +147,50 @@ class WorkshopRepository extends BaseRepository
         return $query->get()->toArray();
     }
 
-    /**
-     * Lista de serviços pai
-     *
-     * @param string $search
-     * @param integer $limit
-     * @return array
-     */
-    public function listaPai()
-    {
-        $registros = $this->model->select(['servicos.id', 'servicos.nome', 'servicos.descricao'])->where('estrutura', true)->get()->toArray();
-        $dado = [];
-        foreach ($registros as $registro) {
-            $dado[] = [
-                'id'        => $registro['id'],
-                'texto'     => $registro['nome'],
-                'descricao' => $registro['descricao']
-            ];
-        }
 
-        return $dado;
+    public function grupos()
+    {
+        $data = Workshop::GRUPOS;
+        return $data;
     }
 
-    /**
-     * Lista de serviços pai
-     *
-     * @param string $search
-     * @param integer $limit
-     * @return array
-     */
-    public function listaFilho($id)
+    public function estadosCivis()
     {
-        $registros = $this->model->select(['servicos.id', 'servicos.nome', 'servicos.descricao'])->where('estrutura_pai_id', $id)->get()->toArray();
-        $dado = [];
-        foreach ($registros as $registro) {
-            $dado[] = [
-                'id'        => $registro['id'],
-                'texto'     => $registro['nome'],
-                'descricao' => $registro['descricao']
-            ];
+        $data = Workshop::ESTADOSCIVIS;
+        return $data;
+    }
+
+    public function relatorios()
+    {
+        $dados = $this->model->get();
+
+        $contM = 0;
+        $contF = 0;
+        $contEstado = ['1'=> 0,'2'=> 0,'3'=> 0,'4'=> 0];
+        $contGrupo = ['1'=> 0,'2'=> 0,'3'=> 0,'4'=> 0,'5'=> 0];
+        foreach ($dados as $dado) {
+            if ($dado['sexo'] == 1)
+                $contM++;
+            else
+                $contF++;
+
+            (int)$contEstado[$dado['estado_civil_id']] +=1;
+            (int)$contGrupo[$dado['grupo_id']] +=1;
+        }
+        $sexos['masculino'] = $contM;
+        $sexos['feminino'] = $contF;
+        $total = count($dados);
+
+
+        $data = Workshop::ESTADOSCIVIS;
+        foreach ($data as $estado) {
+            $estados[$estado['id']] = $contEstado[$estado['id']];
         }
 
-        return $dado;
+        $data = Workshop::GRUPOS;
+        foreach ($data as $grupo) {
+            $grupos[$grupo['id']] = $contGrupo[$grupo['id']];
+        }
+        return ['total' => $total, 'sexos' => $sexos, 'estados' => $estados, 'grupos' => $grupos];
     }
 }
