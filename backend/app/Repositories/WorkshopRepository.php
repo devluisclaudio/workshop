@@ -166,16 +166,16 @@ class WorkshopRepository extends BaseRepository
 
         $contM = 0;
         $contF = 0;
-        $contEstado = ['1'=> 0,'2'=> 0,'3'=> 0,'4'=> 0];
-        $contGrupo = ['1'=> 0,'2'=> 0,'3'=> 0,'4'=> 0,'5'=> 0];
+        $contEstado = ['1' => 0, '2' => 0, '3' => 0, '4' => 0];
+        $contGrupo = ['1' => 0, '2' => 0, '3' => 0, '4' => 0, '5' => 0];
         foreach ($dados as $dado) {
             if ($dado['sexo'] == 1)
                 $contM++;
             else
                 $contF++;
 
-            (int)$contEstado[$dado['estado_civil_id']] +=1;
-            (int)$contGrupo[$dado['grupo_id']] +=1;
+            (int)$contEstado[$dado['estado_civil_id']] += 1;
+            (int)$contGrupo[$dado['grupo_id']] += 1;
         }
         $sexos['masculino'] = $contM;
         $sexos['feminino'] = $contF;
@@ -192,5 +192,19 @@ class WorkshopRepository extends BaseRepository
             $grupos[$grupo['id']] = $contGrupo[$grupo['id']];
         }
         return ['total' => $total, 'sexos' => $sexos, 'estados' => $estados, 'grupos' => $grupos];
+    }
+
+    /**
+     * Emails
+     *
+     * @return array
+     */
+    public function emails()
+    {
+        $query = $this->model;
+        $query = $query->where('id', '<', 71);
+        $query = $query->orderBy('workshops.created_at', 'desc');
+
+        return $query->get();
     }
 }

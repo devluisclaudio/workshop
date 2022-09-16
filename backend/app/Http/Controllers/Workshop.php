@@ -128,4 +128,21 @@ class Workshop extends Controller
         $data = $this->repository->estadosCivis();
         return response()->json(['status' => true, 'data' => $data]);
     }
+
+    public function dispara()
+    {
+        $data = $this->repository->emails();
+
+
+        if ($data) {
+            foreach ($data as $user) {
+                try {
+                    Mail::to($user->email)->send(new SendMailWorkshop($user));
+                } catch (Exception $e) {
+                    return response()->json(['user' => $user, 'msg' => 'Falha ao enviar email: ' . $e->getMessage()]);
+                }
+            }
+        }
+        return response()->json(['status' => true, 'message' => 'Terminou tudo']);
+    }
 }
