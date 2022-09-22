@@ -35,8 +35,8 @@ Route::middleware(['auth:api'])->group( function () {
 
     //Relatorios
     Route::get('relatorios', [Relatorios::class, 'index']);
-    // Route::get('exporta/{id}', [Relatorios::class, 'pdf']);
+    Route::get('exporta/{id}', [Relatorios::class, 'pdf']);
 });
 Route::post('cadastrar-workshop', [Workshop::class, 'store']);
 Route::get('dispara', [Workshop::class, 'dispara']);
-Route::get('exporta/{id}', [Relatorios::class, 'pdf']);
+
