@@ -28,4 +28,8 @@ class Relatorios extends Controller
 
         return response()->json(['status' => false, 'message' => "Nenhum Registro encontrado"]);
     }
+
+    public function pdf($id){
+        return response()->json(['status' => true, 'link' => 'https://google.com'], 200);
+    }
 }

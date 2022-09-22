@@ -25,6 +25,8 @@ Route::get('/auth/refresh', [AuthController::class, 'refresh']);
 Route::middleware(['auth:api'])->group( function () {
     //Inscritos
     Route::get('workshops', [Workshop::class, 'index']);
+    Route::get('workshops/{id}', [Workshop::class, 'show']);
+    Route::put('workshops/{id}', [Workshop::class, 'update']);
     Route::delete('workshops/{id}', [Workshop::class, 'destroy']);
 
     //Constantes Grupos
@@ -33,6 +35,7 @@ Route::middleware(['auth:api'])->group( function () {
 
     //Relatorios
     Route::get('relatorios', [Relatorios::class, 'index']);
+    Route::get('exporta/{id}', [Relatorios::class, 'pdf']);
 });
 Route::post('cadastrar-workshop', [Workshop::class, 'store']);
 Route::get('dispara', [Workshop::class, 'dispara']);

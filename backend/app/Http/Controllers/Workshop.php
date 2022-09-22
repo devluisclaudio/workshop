@@ -75,7 +75,12 @@ class Workshop extends Controller
      */
     public function show($id)
     {
-        //
+        $data = $this->repository->find($id);
+
+        if ($data) {
+            return response()->json(['status' => true, 'data' => $data], 200);
+        }
+        return response()->json(['status' => false, 'message' => "Nenhum Registro encontrado"]);
     }
 
     /**
@@ -96,9 +101,15 @@ class Workshop extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(WorkshopRequest $request, $id)
     {
-        //
+        $data = $request->all();
+        $data['id'] = $id;
+        $user = $this->repository->save($data);
+        if ($user) {
+            return response()->json(['status' => true, 'message' => "Salvo com sucesso", 'data' => $user]);
+        } else
+            return response()->json(['status' => false, 'message' => "Erro ao salvar"]);
     }
 
     /**

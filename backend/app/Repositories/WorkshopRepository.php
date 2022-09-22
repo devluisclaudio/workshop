@@ -139,12 +139,10 @@ class WorkshopRepository extends BaseRepository
      * @param integer $limit
      * @return array
      */
-    public function findServico($id)
+    public function find($id)
     {
-        $query = $this->model->select(['servicos.*'])->with('user', 'categoria');
-        $query = $query->where('servicos.id',  $id);
-
-        return $query->get()->toArray();
+        $query = $this->model->find($id);
+        return $query;
     }
 
 
