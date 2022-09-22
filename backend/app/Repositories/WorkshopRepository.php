@@ -205,4 +205,18 @@ class WorkshopRepository extends BaseRepository
 
         return $query->get();
     }
+
+    /**
+     * Pdf
+     *
+     * @return array
+     */
+    public function pdf( int $id)
+    {
+        $query = $this->model;
+        $query = $query->where('grupo_id', $id);
+        $query = $query->orderBy('workshops.nome', 'asc');
+
+        return $query->get()->toArray();
+    }
 }

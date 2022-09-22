@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\WorkshopRepository;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class Relatorios extends Controller
@@ -30,6 +31,8 @@ class Relatorios extends Controller
     }
 
     public function pdf($id){
-        return response()->json(['status' => true, 'link' => 'https://google.com'], 200);
+        $lista = $this->repository->pdf($id);
+        $link = Pdf::loadView('relatorios.pdf', compact('lista'));
+        return $link->stream('relatorio.pdf');
     }
 }
