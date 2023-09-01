@@ -11,11 +11,13 @@ class Workshop extends Model
     use SoftDeletes;
 
     public const GRUPOS = [
-        ['id' => '1', 'nome' => 'Casais - (até 49 anos)'],
-        ['id' => '2', 'nome' => 'Crianças - (4 a 10 anos)'],
-        ['id' => '3', 'nome' => 'Adolescentes - (11 a 17 anos)'],
-        ['id' => '4', 'nome' => 'Jovens - (18 a 49 anos)'],
-        ['id' => '5', 'nome' => 'Master - (Acima de 49 anos)']
+        ['id' => '1', 'nome' => 'Casais'],
+        ['id' => '2', 'nome' => 'Crianças - (4 a 6 anos)'],
+        ['id' => '3', 'nome' => 'Crianças - (7 a 11 anos)'],
+        ['id' => '4', 'nome' => 'Adolescentes - (12 a 17 anos)'],
+        ['id' => '5', 'nome' => 'Jovens '],
+        ['id' => '6', 'nome' => 'Master - (Acima de 60 anos)'],
+        ['id' => '7', 'nome' => 'Divorciados e Viúvos']
     ];
 
     public const ESTADOSCIVIS = [

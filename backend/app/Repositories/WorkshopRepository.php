@@ -165,7 +165,7 @@ class WorkshopRepository extends BaseRepository
         $contM = 0;
         $contF = 0;
         $contEstado = ['1' => 0, '2' => 0, '3' => 0, '4' => 0];
-        $contGrupo = ['1' => 0, '2' => 0, '3' => 0, '4' => 0, '5' => 0];
+        $contGrupo = ['1' => 0, '2' => 0, '3' => 0, '4' => 0, '5' => 0,'6' => 0, '7' => 0];
         foreach ($dados as $dado) {
             if ($dado['sexo'] == 1)
                 $contM++;
