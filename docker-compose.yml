@@ -1,6 +1,6 @@
 version: "3.3"
 services:
- # Lunnem Api
+  # Lunnem Api
   api_nginx:
     image: nginx:alpine
     container_name: nginx-api
@@ -11,7 +11,7 @@ services:
       - ./backend:/var/www/html/
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - "92:80"
+      - "80"
     networks:
       - chama_network
   backend:
@@ -26,32 +26,19 @@ services:
       - 9000
     networks:
       - chama_network
-  # front:
-  #   image: nginx:alpine
-  #   container_name: nginx-front
-  #   restart: unless-stopped
-  #   tty: true
-  #   working_dir: /var/www/html/
-  #   volumes:
-  #     - ./front_workshop:/var/www/html/
-  #     - ./nginx/nginx2.conf:/etc/nginx/conf.d/default.conf
-  #   ports:
-  #     - "91:80"
-  #   networks:
-  #     - chama_network
-  # portal:
-  #   image: nginx:alpine
-  #   container_name: nginx-portal
-  #   restart: unless-stopped
-  #   tty: true
-  #   working_dir: /var/www/html/
-  #   volumes:
-  #     - ./portal:/var/www/html/
-  #     - ./nginx/nginx2.conf:/etc/nginx/conf.d/default.conf
-  #   ports:
-  #     - "93:80"
-  #   networks:
-  #     - chama_network
+  portal:
+    image: nginx:alpine
+    container_name: nginx-portal
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www/html/
+    volumes:
+      - ./portal:/var/www/html/
+      - ./nginx/nginx2.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    networks:
+      - chama_network
 networks:
   chama_network:
     driver: bridge
